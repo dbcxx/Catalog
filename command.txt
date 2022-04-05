@@ -1,0 +1,9 @@
+﻿ // command to run mongo db 
+
+ docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db
+
+ // to start mongo db with network link
+ docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db --network=cataloglink mongo
+
+ //to start catalog with link to mongo 
+ docker run -it --rm -p 8080:80 -e MongoDbSettings:Host=mongo --network=cataloglink catalog:v1
