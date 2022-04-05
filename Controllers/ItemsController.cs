@@ -23,14 +23,19 @@ namespace Catalog.Controllers
 
         //GET items
         [HttpGet]
-       public async Task<IEnumerable<ItemDto>> GetItemsAsync()
+       public async Task<IEnumerable<ItemDto>> GetItemsAsync(string name = null)
         {
             var items = (await repository.GetItemsAsync()).Select(item => item.AsDto());
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                items = items.Where(item=>item.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+            }
             return items;
         }
 
         //GET  /id
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] 
         public async Task<ActionResult<ItemDto>>  GetItemAsync(Guid id)
         {
             
@@ -56,7 +61,8 @@ namespace Catalog.Controllers
 
             await repository.CreateItemAsync(item);
 
-            return CreatedAtAction(nameof(GetItemAsync), new {id = item.Id},item.AsDto());
+            return CreatedAtAction(nameof(GetItemAsync), new {id = item.Id}, item.AsDto());
+            
         }
 
 
