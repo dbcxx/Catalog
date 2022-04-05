@@ -41,7 +41,11 @@ namespace Catalog
                 return new MongoClient(settings.ConnectionString);
             });
             services.AddSingleton<IItemsRepository, MongoDbItemsRepository>();
-            services.AddControllers();
+            services.AddControllers(option =>
+            {
+                // this is a fix for the create item async no route issues
+                option.SuppressAsyncSuffixInActionNames = false;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog", Version = "v1" });

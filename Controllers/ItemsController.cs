@@ -23,14 +23,14 @@ namespace Catalog.Controllers
 
         //GET items
         [HttpGet]
-       public async Task<IEnumerable<ItemDto>> GetItemsAsync(string name = null)
+       public async Task<IEnumerable<ItemDto>> GetItemsAsync(/*string name = null*/)
         {
             var items = (await repository.GetItemsAsync()).Select(item => item.AsDto());
 
-            if (!string.IsNullOrEmpty(name))
-            {
-                items = items.Where(item=>item.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
-            }
+            //if (!string.IsNullOrEmpty(name))
+            //{
+            //    items = items.Where(item=>item.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+            //}
             return items;
         }
 
