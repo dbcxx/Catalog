@@ -1,11 +1,11 @@
-﻿using Catalog.Entities;
+﻿using Catalog.Api.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Catalog.Repo
+namespace Catalog.Api.Repo
 {
     public class MongoDbItemsRepository : IItemsRepository
     {
@@ -22,7 +22,7 @@ namespace Catalog.Repo
 
         public async Task CreateItemAsync(Item item)
         {
-           await itemsCollection.InsertOneAsync(item);
+            await itemsCollection.InsertOneAsync(item);
         }
 
         public async Task DeleteItemAsync(Guid id)
@@ -39,13 +39,13 @@ namespace Catalog.Repo
 
         public async Task<IEnumerable<Item>> GetItemsAsync()
         {
-            return  await itemsCollection.Find(new BsonDocument()).ToListAsync();
+            return await itemsCollection.Find(new BsonDocument()).ToListAsync();
         }
 
         public async Task UpdateItemAsync(Item item)
         {
             var filter = filterBuilder.Eq(existingItem => existingItem.Id, item.Id);
-           await itemsCollection.ReplaceOneAsync(filter, item);
+            await itemsCollection.ReplaceOneAsync(filter, item);
         }
     }
 }

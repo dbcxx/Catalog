@@ -1,5 +1,5 @@
-using Catalog.Repo;
-using Catalog.Settings;
+using Catalog.Api.Repo;
+using Catalog.Api.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog
+namespace Catalog.Api
 {
     public class Startup
     {
@@ -66,7 +66,7 @@ namespace Catalog
             {
                 app.UseHttpsRedirection();
             }
-            
+
 
             app.UseRouting();
 

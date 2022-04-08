@@ -1,6 +1,6 @@
-﻿using Catalog.Dtos;
-using Catalog.Entities;
-using Catalog.Repo;
+﻿using Catalog.Api.Dtos;
+using Catalog.Api.Entities;
+using Catalog.Api.Repo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,11 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.Controllers
+namespace Catalog.Api.Controllers
 {
     [ApiController]
     [Route("items")]
-   public class ItemsController : ControllerBase
+    public class ItemsController : ControllerBase
     {
         private readonly IItemsRepository repository;
 
@@ -23,7 +23,7 @@ namespace Catalog.Controllers
 
         //GET items
         [HttpGet]
-       public async Task<IEnumerable<ItemDto>> GetItemsAsync(/*string name = null*/)
+        public async Task<IEnumerable<ItemDto>> GetItemsAsync(/*string name = null*/)
         {
             var items = (await repository.GetItemsAsync()).Select(item => item.AsDto());
 
@@ -35,12 +35,12 @@ namespace Catalog.Controllers
         }
 
         //GET  /id
-        [HttpGet("{id}")] 
-        public async Task<ActionResult<ItemDto>>  GetItemAsync(Guid id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ItemDto>> GetItemAsync(Guid id)
         {
-            
+
             var item = await repository.GetItemAsync(id);
-            if(item == null)
+            if (item == null)
             {
                 return NotFound();
             }
@@ -61,16 +61,16 @@ namespace Catalog.Controllers
 
             await repository.CreateItemAsync(item);
 
-            return CreatedAtAction(nameof(GetItemAsync), new {id = item.Id}, item.AsDto());
-            
+            return CreatedAtAction(nameof(GetItemAsync), new { id = item.Id }, item.AsDto());
+
         }
 
 
         //PUT  /item
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateItemAsync(Guid id , UpdateItemDto itemDto)
+        public async Task<ActionResult> UpdateItemAsync(Guid id, UpdateItemDto itemDto)
         {
-            var existingItem =  await repository.GetItemAsync(id);
+            var existingItem = await repository.GetItemAsync(id);
             if (existingItem == null)
             {
                 return NotFound();
@@ -97,7 +97,7 @@ namespace Catalog.Controllers
                 return NotFound();
             }
 
-           await repository.DeleteItemAsync(id);
+            await repository.DeleteItemAsync(id);
 
             return NoContent();
         }

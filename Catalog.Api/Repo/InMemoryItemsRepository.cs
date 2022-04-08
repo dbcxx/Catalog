@@ -1,10 +1,10 @@
-﻿using Catalog.Entities;
+﻿using Catalog.Api.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.Repo
+namespace Catalog.Api.Repo
 {
     public class InMemoryItemsRepository : IItemsRepository
     {
@@ -19,7 +19,7 @@ namespace Catalog.Repo
         {
             return await Task.FromResult(items);
         }
-         public async Task<Item> GetItemAsync(Guid id)
+        public async Task<Item> GetItemAsync(Guid id)
         {
             var item = items.Where(item => item.Id == id).SingleOrDefault();
             return await Task.FromResult(item);
